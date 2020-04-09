@@ -42,11 +42,91 @@ ChatBot::~ChatBot()
     }
 }
 
-//// STUDENT CODE
-////
+//implementing rule of five for ChatBot
 
-////
-//// EOF STUDENT CODE
+ChatBot::ChatBot(const ChatBot &source) // 2 : copy constructor
+{
+    std::cout << "ChatBot Copy Constructor" << std::endl;
+    
+    // copy data handles
+    _rootNode = source._rootNode;
+    _currentNode = source._currentNode;
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+
+    // copy image onto heap memory
+    _image = new wxBitmap(*source._image);
+
+}
+
+ChatBot::ChatBot(ChatBot &&source) // 4 : move constructor
+{   
+    std::cout << "ChatBot Move Constructor" << std::endl;
+    
+    // move data handles
+    _rootNode = source._rootNode;
+    _currentNode = source._currentNode;
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+
+    //cleanup old data handles
+    source._chatLogic = nullptr;
+    source._rootNode = nullptr;
+    source._currentNode = nullptr;
+
+    // move image
+    _image = source._image;
+    source._image = NULL;
+}
+
+ChatBot& ChatBot::operator=(const ChatBot &source) // 3 : copy assignment operator
+{
+    if (this == &source)
+        return *this;
+    
+    std::cout << "ChatBot Copy Constructor" << std::endl;
+    // copy data handles
+    _rootNode = source._rootNode;
+    _currentNode = source._currentNode;
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+
+    // copy image onto heap memory
+    if(_image)
+        delete _image;
+    _image = new wxBitmap(*source._image);
+
+    return *this;
+
+}
+
+ChatBot& ChatBot::operator=(ChatBot &&source) // 5 : move assignment operator
+{
+    if (this == &source)
+        return *this;
+
+    std::cout << "ChatBot Move Constructor" << std::endl;
+
+    // copy data handles
+    _rootNode = source._rootNode;
+    _currentNode = source._currentNode;
+    _chatLogic = source._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+
+    //cleanup old data handles
+    source._chatLogic = nullptr;
+    source._rootNode = nullptr;
+    source._currentNode = nullptr;
+
+    //delete if pointer to an image on the heap
+    if(_image)
+        delete _image;
+    //move _image pointer to where the source image is stored
+    _image = source._image;
+    source._image = NULL;
+
+    return *this;
+}
 
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {
