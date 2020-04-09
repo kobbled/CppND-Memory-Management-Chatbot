@@ -84,7 +84,7 @@ ChatBot& ChatBot::operator=(const ChatBot &source) // 3 : copy assignment operat
     if (this == &source)
         return *this;
     
-    std::cout << "ChatBot Copy Constructor" << std::endl;
+    std::cout << "ChatBot Copy Assignment Operator" << std::endl;
     // copy data handles
     _rootNode = source._rootNode;
     _currentNode = source._currentNode;
@@ -105,7 +105,7 @@ ChatBot& ChatBot::operator=(ChatBot &&source) // 5 : move assignment operator
     if (this == &source)
         return *this;
 
-    std::cout << "ChatBot Move Constructor" << std::endl;
+    std::cout << "ChatBot Move Assignment Operator" << std::endl;
 
     // copy data handles
     _rootNode = source._rootNode;
